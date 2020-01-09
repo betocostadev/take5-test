@@ -1,30 +1,37 @@
 <template>
-  <q-page class="flex flex-center no-wrap">
-    <h2 class="text-h2">Pokedex</h2>
-    <button v-on:click="loadData()">Show</button>
-    <div class="row">
-    <p class="text-center">Pokémon list</p>
-    <ul id="example-1">
-      <li v-for="(index, pokemon) in pokemons" v-bind:key="pokemon.url">
-        {{ index.name }} {{ index.url }}
-      </li>
-    </ul>
+  <q-page>
+    <div class="column">
+      <h3 class="text-h3 text-center">Pokémon list</h3>
+    </div>
+    <!-- <button v-on:click="loadData()">Show</button> -->
+    <div class="column q-pa-md items-center">
+      <div class="q-gutter-md" style="max-width: 500px">
+        <q-input outlined v-model="search" label="Search" />
+      </div>
+    </div>
+
+    <div class="column justify-center items-center">
+      <q-list bordered separator>
+        <q-item clickable v-ripple v-for="(index, pokemon) in filteredPokemons"
+            v-bind:key="pokemon.url">
+          <q-item-section>
+            <q-item-label overline>{{ index.name.toUpperCase() }}</q-item-label>
+            <q-item-label><a :href="index.url">Check Info</a></q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
     </div>
   </q-page>
 </template>
 
 <script>
 
-/* Colocando os dados como Pokemon e retornando está funcionando. Talvez o melhor seja:
-Carregar os dados usando o "mounted". Usar um botão que irá colocar tudo na página, chamando os dados
-que já estarão carregados através do mounted. */
-
 export default {
   name: 'PageIndex',
   async created () {
-    const pokemons = await this.$axios.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40`)
-    console.log('pokemons are:', pokemons.data)
-    console.log('first poke:', pokemons.data.results[0])
+    const pokemons = await this.$axios.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151`)
+    // console.log('pokemons are:', pokemons.data)
+    // console.log('first poke:', pokemons.data.results[0])
     pokemons.data.results.forEach(pokemon => {
       console.log(pokemon.name)
     })
@@ -32,7 +39,15 @@ export default {
   },
   data () {
     return {
-      pokemons: []
+      pokemons: [],
+      search: ''
+    }
+  },
+  computed: {
+    filteredPokemons () {
+      return this.pokemons.filter((pokemon) => {
+        return pokemon.name.match(this.search.toLowerCase())
+      })
     }
   },
   methods: {
