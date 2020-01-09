@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Pokedex
+          POKEDEX
         </q-toolbar-title>
 
         <div>TAKE5 Test</div>
