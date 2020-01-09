@@ -3,14 +3,18 @@
     <h2>Pokedex</h2>
     <button v-on:click="loadData()">Show</button>
     <button v-on:click="say(loadData())">Show2</button>
-    <p>{{pokemons}}</p>
+    <ul id="example-1">
+      <li v-for="pokemon in pokemons" v-bind:key="pokemon.name">
+        {{ pokemon.name }}
+      </li>
+    </ul>
   </q-page>
 </template>
 
 <script>
 
-// Colocando os dados como Pokemon e retornando está funcionando. Talvez o melhor seja:
-/* Carregar os dados usando o "mounted". Usar um botão que irá colocar tudo na página, chamando os dados
+/* Colocando os dados como Pokemon e retornando está funcionando. Talvez o melhor seja:
+Carregar os dados usando o "mounted". Usar um botão que irá colocar tudo na página, chamando os dados
 que já estarão carregados através do mounted. */
 
 import { date } from 'quasar'
