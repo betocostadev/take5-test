@@ -1,19 +1,38 @@
 <template>
-  <q-page padding>
-    <!-- content -->
-    <h3>{{ pokemon.name.toUpperCase() }}</h3>
-
+  <q-page class="flex flex-center">
     <div class="q-pa-md row items-start q-gutter-md items-center">
       <q-card class="my-card">
-        <img :src="pokemon.sprites.front_default">
+        <img :src="frontImage">
 
         <q-card-section>
-          <div class="text-h6 capitalize">{{ pokemon.name }}</div>
-          <div class="text-subtitle2">Base experience: {{pokemon.base_experience}}</div>
+          <div class="text-h6 capitalize">{{ pokeName.charAt(0).toUpperCase() + pokeName.slice(1) }}</div>
+          <div class="text-subtitle2">ID: {{pokemon.id}}</div>
         </q-card-section>
 
         <q-card-section>
-          {{ lorem }}
+          <q-list dense bordered padding class="rounded-borders">
+            <q-item clickable v-ripple>
+              <q-item-section>
+                Base experience: {{pokemon.base_experience}}
+              </q-item-section>
+              <q-item-section>
+                Height: {{pokemon.height}}
+              </q-item-section>
+              <q-item-section>
+                Weight: {{pokemon.weight}}
+              </q-item-section>
+            </q-item>
+          </q-list>
+          <p>Abilities:</p>
+          <q-list dense bordered padding class="rounded-borders">
+            <q-item v-for="(index, ability) in abilities" v-bind:key="ability">
+              <q-item-section>
+                <q-item-label overline>
+                  {{index.ability.name}}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-card-section>
       </q-card>
     </div>
@@ -90,14 +109,17 @@ export default {
   async created () {
     const pokemon = await this.$axios.get(`https://pokeapi.co/api/v2/pokemon/${this.$route.params.id}`)
     console.log(pokemon.data)
-    // pokemons.data.results.forEach(pokemon => {
-    //   console.log(pokemon.name)
-    // })
     this.pokemon = pokemon.data
+    this.pokeName = pokemon.data.name
+    this.frontImage = pokemon.data.sprites.front_default
+    this.abilities = pokemon.data.abilities
   },
   data () {
     return {
-      pokemon: ''
+      pokemon: '',
+      pokeName: '',
+      frontImage: '',
+      abilities: ''
     }
   }
 }

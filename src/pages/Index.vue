@@ -17,8 +17,7 @@
           <q-item-section>
             <q-item-label overline>
               {{index.url.slice(33).replace('/', '').replace('/', '')}} | {{ index.name.toUpperCase() }}</q-item-label>
-            <q-item-label><a :href="index.url">Check Info</a></q-item-label>
-            <router-link :to="{name: 'pokemoninfo', params: {id: index.name }}">Go to Foo</router-link>
+            <router-link :to="{name: 'pokemoninfo', params: {id: index.name }}">Go to Info</router-link>
           </q-item-section>
         </q-item>
       </q-list>
@@ -33,10 +32,6 @@ export default {
   async created () {
     const pokemons = await this.$axios.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151`)
     // console.log('pokemons are:', pokemons.data)
-    // console.log('first poke:', pokemons.data.results[0])
-    pokemons.data.results.forEach(pokemon => {
-      console.log(pokemon.name)
-    })
     this.pokemons = pokemons.data.results
   },
   data () {
@@ -67,15 +62,5 @@ export default {
       return test
     }
   }
-  // mounted () {
-  //   this.$nextTick(function () {
-  //     const pokemons = this.$axios.get('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40')
-  //       .then((response) => {
-  //         const data = response.data.results
-  //         return data
-  //       })
-  //     return pokemons
-  //   })
-  // }
 }
 </script>
