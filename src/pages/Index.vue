@@ -15,7 +15,8 @@
         <q-item clickable v-ripple v-for="(index, pokemon) in filteredPokemons"
             v-bind:key="pokemon.url">
           <q-item-section>
-            <q-item-label overline>{{ index.name.toUpperCase() }}</q-item-label>
+            <q-item-label overline>
+              {{index.url.slice(33).replace('/', '').replace('/', '')}} | {{ index.name.toUpperCase() }}</q-item-label>
             <q-item-label><a :href="index.url">Check Info</a></q-item-label>
           </q-item-section>
         </q-item>
