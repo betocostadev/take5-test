@@ -18,6 +18,7 @@
             <q-item-label overline>
               {{index.url.slice(33).replace('/', '').replace('/', '')}} | {{ index.name.toUpperCase() }}</q-item-label>
             <q-item-label><a :href="index.url">Check Info</a></q-item-label>
+            <router-link :to="{name: 'pokemoninfo', params: {id: index.name }}">Go to Foo</router-link>
           </q-item-section>
         </q-item>
       </q-list>
@@ -41,6 +42,7 @@ export default {
   data () {
     return {
       pokemons: [],
+      pokemonName: '',
       search: ''
     }
   },
