@@ -11,7 +11,7 @@
           aria-label="Menu"
         />
 
-        <q-toolbar-title>
+        <q-toolbar-title to="/">
           POKEDEX
         </q-toolbar-title>
 
